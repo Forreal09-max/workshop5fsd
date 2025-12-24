@@ -2,8 +2,6 @@
 include "header.php";
 
 echo "<h2>Students List</h2>";
-
-// Check if file exists
 if (!file_exists("students.txt")) {
     echo "<p>No students found.</p>";
     include "footer.php";
