@@ -10,17 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = formatName($_POST["name"]);
         $email = $_POST["email"];
         $skillsInput = $_POST["skills"];
-
         if (empty($name) || empty($email) || empty($skillsInput)) {
             throw new Exception("All fields are required");
         }
-
         if (!validateEmail($email)) {
             throw new Exception("Invalid email format");
         }
-
         $skillsArray = cleanSkills($skillsInput);
-        saveStudent($name, $email, $skillsArray);
+        $skillsString = implode(", ", $skillsArray);
+        saveStudent($name, $email, $skillsString);
 
         $success = "Student saved successfully!";
     } catch (Exception $e) {

@@ -3,22 +3,27 @@ include "header.php";
 
 echo "<h2>Students List</h2>";
 
-if (file_exists("students.txt")) {
-    $lines = file("students.txt");
-
-    foreach ($lines as $line) {
-        list($name, $email, $skills) = explode("|", trim($line));
-        $skillsArray = explode(",", $skills);
-
-        echo "<p>";
-        echo "<strong>Name:</strong> $name <br>";
-        echo "<strong>Email:</strong> $email <br>";
-        echo "<strong>Skills:</strong> ";
-        print_r($skillsArray);
-        echo "</p><hr>";
-    }
-} else {
-    echo "No students found.";
+// Check if file exists
+if (!file_exists("students.txt")) {
+    echo "<p>No students found.</p>";
+    include "footer.php";
+    exit;
 }
+$lines = file("students.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
+foreach ($lines as $line) {
+    list($name, $email, $skills) = explode("|", $line);
+    $name = trim($name);
+    $email = trim($email);
+    $skills = trim($skills);
+    if (is_array($skills)) {
+        $skills = implode(", ", $skills);
+    }
+    echo "<p>";
+    echo "Name: $name<br>";
+    echo "Email: $email<br>";
+    echo "Skills: $skills";
+    echo "</p>";
+}
 include "footer.php";
+?>

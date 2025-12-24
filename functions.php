@@ -9,9 +9,12 @@ function cleanSkills($string) {
     $skills = explode(",", $string);
     return array_map("trim", $skills);
 }
-function saveStudent($name, $email, $skillsArray) {
-    $data = $name . "|" . $email . "|" . implode(",", $skillsArray) . PHP_EOL;
-    file_put_contents("students.txt", $data, FILE_APPEND);
+function saveStudent($name, $email, $skills) {
+    if (is_array($skills)) {
+        $skills = implode(", ", $skills);
+    }
+    $line = "$name | $email | $skills\n";
+    file_put_contents("students.txt", $line, FILE_APPEND);
 }
 function uploadPortfolioFile($file) {
 
